@@ -1,0 +1,14 @@
+{
+  "name": "gsn-with-truffle",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "test": "truffle test"
+  },
+  "dependencies": {
+    "@opengsn/gsn": "^0.9.0"
+  },
+  "devDependencies": {
+    "truffle": "^5.1.26"
+  }
+}
