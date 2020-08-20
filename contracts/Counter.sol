@@ -16,5 +16,10 @@ contract Counter is BaseRelayRecipient {
 		counter++;
 		lastCaller = _msgSender();
 	}
+
+	function versionRecipient() external override view returns (string memory) {
+		return "1.0.2";
+	}
+
 } 
 

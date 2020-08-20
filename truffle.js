@@ -1,5 +1,6 @@
 //add to connect to external networks
-//var HDWalletProvider = require('truffle-hdwallet-provider')
+const HDWalletProvider = require( '@truffle/hdwallet-provider' )
+
 var mnemonic = 'give cancel discover junk point despair woman piece cart typical void bench hub tenant winter'
 function readFile(name) {
 
@@ -17,7 +18,7 @@ module.exports = {
     },
     kovan: {
       provider: function () {
-        return new HDWalletProvider(mnemonic, 'https://kovan.infura.io/v3/c3422181d0594697a38defe7706a1e5b')
+        return new HDWalletProvider(mnemonic, 'https://kovan.infura.io/v3/806594deb7c4459a96a7df93514c2b49')
       },
       network_id: 42
     },
