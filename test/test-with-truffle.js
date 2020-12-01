@@ -58,13 +58,14 @@ describe( 'using truffle\'s TruffleContract', ()=> {
         }
     }
 
-    const config = await resolveConfigurationGSN(web3.currentProvider, {
+    const config = {
       paymasterAddress, 
       // forwarderAddress: forwarder, 
-    	verbose: true
-    })
+      // logLevel: 'debug'
+    }
     console.log( 'config=',config)
     provider = new Gsn.RelayProvider(web3.currentProvider, config )
+    await provider.init()
 
     provider.registerEventListener(console.log)
     //create a new gasless account:

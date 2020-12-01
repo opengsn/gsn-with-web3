@@ -3,12 +3,12 @@
   "version": "1.1.0",
   "license": "MIT",
   "scripts": {
-    "test": "yarn run-with-testrpc --chainId 1337 'truffle test'",
+    "test": "truffle compile && yarn run-with-testrpc --chainId 1337 'truffle test'",
     "ganache-with-gsn": "run-with-ganache --chainId 1337 'gsn start'",
     "kovantest": "truffle test --network kovan"
   },
   "dependencies": {
-    "@opengsn/gsn": "^2.0.1",
+    "@opengsn/gsn": "^2.0.3",
     "@truffle/hdwallet-provider": "^1.0.42",
     "ganache-cli": "^6.11.0",
     "run-with-testrpc": "^0.3.1"
