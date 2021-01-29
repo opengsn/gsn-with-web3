@@ -1,6 +1,4 @@
 Gsn = require( '@opengsn/gsn')
-const { resolveConfigurationGSN } = require( '@opengsn/gsn/dist/src/relayclient/GSNConfigurator' )
-// const { startGsn } = require( '@opengsn/gsn/dist/src/relayclient/GsnTestEnvironent' )
 
 const { GsnTestEnvironment } = require('@opengsn/gsn/dist/GsnTestEnvironment' )
 Counter = artifacts.require( 'Counter')
@@ -29,13 +27,12 @@ describe( 'using truffle\'s TruffleContract', ()=> {
       case 4:
         paymasterAddress = '0x43d66E6Dce20264F6511A0e8EEa3f570980341a2'
         forwarder = '0x956868751Cc565507B3B58E53a6f9f41B56bed74'
-        counterAddress = '0x74440273b6442C879A7174Fed79b18720B4f2218'
+        counterAddress = '0x989bE8F86DbE3e5DD98e3E54982C941a09a15B84'
         break
 
       case 3:
-
         paymasterAddress = '0x8057c0fb7089BB646f824fF4A4f5a18A8d978ecC'
-        forwarder: '0x25CEd1955423BA34332Ec1B60154967750a0297D'
+        forwarder = '0x25CEd1955423BA34332Ec1B60154967750a0297D'
         counterAddress = '0xDF387A17FD0dC5dEcfEA385e4e336F947363831b'
         break
 
@@ -52,24 +49,29 @@ describe( 'using truffle\'s TruffleContract', ()=> {
 
           //only ganache is running. start GSN with each test:      
           let env = await GsnTestEnvironment.startGsn('localhost')
-          paymasterAddress = env.deploymentResult.naivePaymasterAddress
-          forwarder = env.deploymentResult.forwarderAddress
+          paymasterAddress = env.contractsDeployment.paymasterAddress
+          forwarder = env.contractsDeployment.forwarderAddress
 
         }
     }
 
     const config = {
-      paymasterAddress, 
-      // forwarderAddress: forwarder, 
-      // logLevel: 'debug'
+      paymasterAddress,
+      loggerConfiguration: {
+        logLevel: 'error'
+      }
     }
     console.log( 'config=',config)
-    provider = new Gsn.RelayProvider(web3.currentProvider, config )
-    await provider.init()
+   provider = Gsn.RelayProvider.newProvider({provider: web3.currentProvider, config})
+   await provider.init()
 
-    provider.registerEventListener(console.log)
+    //provider.registerEventListener(console.log)
     //create a new gasless account:
     from = web3.utils.toChecksumAddress(provider.newAccount().address)
+  })
+
+  after(async()=>{
+    await GsnTestEnvironment.stopGsn()
   })
 
   it( 'run with TruffleContract', async function() {
@@ -83,17 +85,19 @@ describe( 'using truffle\'s TruffleContract', ()=> {
       console.log( 'using counter at address=', counter.address)
     } else {
 
+        const accounts = await web3.eth.getAccounts()
         //deploy on ganache
-        counter = await Counter.new(forwarder)
+        counter = await Counter.new(forwarder, {from:accounts[0], useGSN:false})
         console.log( 'deployed counter at address=', counter.address)
     }
     console.log( 'paymaster=', paymasterAddress)
 
+    Counter.defaults({...Counter.defaults(), gas:undefined })
     //NOTE: this is required only in truffle tests: the "artifacts.require" is called
     // before we could update the global web3's provider
     Counter.web3.setProvider(provider)
 
-    await counter.increment({from, gas:1e6})
+    await counter.increment({from})
     assert.equal( from, await counter.lastCaller() )
   })
 
@@ -104,7 +108,7 @@ describe( 'using truffle\'s TruffleContract', ()=> {
       console.log( 'bal ', deployAccount, await web3.eth.getBalance(deployAccount))
       //create a contract and deploy it - without GSN
       const deployCounter = new web3.eth.Contract( CounterArtifact.abi )
-      const deployed = await deployCounter.deploy({arguments:[forwarder], data:CounterArtifact.bytecode} ).send({from:deployAccount, gasLimit:1e6})
+      const deployed = await deployCounter.deploy({arguments:[forwarder], data:CounterArtifact.bytecode} ).send({from:deployAccount, gasLimit:1e6, useGSN:false})
       counterAddress = deployed.options.address
     }
 
@@ -113,7 +117,7 @@ describe( 'using truffle\'s TruffleContract', ()=> {
 
     const counter = new web3.eth.Contract( CounterArtifact.abi, counterAddress )
 
-    await counter.methods.increment().send({from, gas:1e6})
+    await counter.methods.increment().send({from})
     assert.equal( from, await counter.methods.lastCaller().call() )
   })
 })

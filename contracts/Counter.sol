@@ -1,4 +1,5 @@
 pragma solidity ^0.6.2;
+// SPDX-License-Identifier: MIT
 
 import "@opengsn/gsn/contracts/BaseRelayRecipient.sol";
 
