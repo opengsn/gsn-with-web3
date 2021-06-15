@@ -1,7 +1,7 @@
-pragma solidity ^0.6.2;
+pragma solidity ^0.7.6;
 // SPDX-License-Identifier: MIT
 
-import "@opengsn/gsn/contracts/BaseRelayRecipient.sol";
+import "@opengsn/contracts/src/BaseRelayRecipient.sol";
 
 
 contract Counter is BaseRelayRecipient {
@@ -19,7 +19,7 @@ contract Counter is BaseRelayRecipient {
 	}
 
 	function versionRecipient() external override view returns (string memory) {
-		return "1.0.2";
+		return "2.2.0";
 	}
 
 } 

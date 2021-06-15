@@ -1,6 +1,6 @@
-Gsn = require( '@opengsn/gsn')
+Gsn = require( '@opengsn/provider')
 
-const { GsnTestEnvironment } = require('@opengsn/gsn/dist/GsnTestEnvironment' )
+const { GsnTestEnvironment } = require('@opengsn/cli/dist/GsnTestEnvironment' )
 Counter = artifacts.require( 'Counter')
 // IPaymaster = artifacts.require( 'IPaymaster')
 CounterArtifact = require( '../build/contracts/Counter')
@@ -18,22 +18,23 @@ describe( 'using truffle\'s TruffleContract', ()=> {
   	console.log( 'using network', netid) 
   
     switch (netid) {
+
       case 42:
-        paymasterAddress = '0x083082b7Eada37dbD8f263050570B31448E61c94'
-        forwarder = '0x0842Ad6B8cb64364761C7c170D0002CC56b1c498'
-        counterAddress = '0x60180E5a653b475dAb7F5a92523A88d141215355'
+        paymasterAddress = '0xFACb65Ea83795c54Fb92Bb3B646B757A9eB9ECA2'
+        forwarder = '0x7eEae829DF28F9Ce522274D5771A6Be91d00E5ED'
+        counterAddress = '0x439cDcF4F501018Cb16428f635eE55042cDA7335'
         break
 
       case 4:
-        paymasterAddress = '0x43d66E6Dce20264F6511A0e8EEa3f570980341a2'
-        forwarder = '0x956868751Cc565507B3B58E53a6f9f41B56bed74'
-        counterAddress = '0x989bE8F86DbE3e5DD98e3E54982C941a09a15B84'
+        paymasterAddress = '0xA6e10aA9B038c9Cddea24D2ae77eC3cE38a0c016'
+        forwarder = '0x83A54884bE4657706785D7309cf46B58FE5f6e8a'
+        counterAddress = '0x4f6A12C3F9e6Ce99ece166Caa3E714f331E9f93c'
         break
 
       case 3:
-        paymasterAddress = '0x8057c0fb7089BB646f824fF4A4f5a18A8d978ecC'
-        forwarder = '0x25CEd1955423BA34332Ec1B60154967750a0297D'
-        counterAddress = '0xDF387A17FD0dC5dEcfEA385e4e336F947363831b'
+        paymasterAddress = '0x246aC46ad7ee41A1Ba87DbF9Dd0592E8a20951D9'
+        forwarder = '0xeB230bF62267E94e657b5cbE74bdcea78EB3a5AB'
+        counterAddress = '0x51a89c18f9E29b434B9308e87D6A1AE6CF5E9A31'
         break
 
       default:
