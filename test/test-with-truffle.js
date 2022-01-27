@@ -93,7 +93,9 @@ describe( 'using truffle\'s TruffleContract', ()=> {
     }
     console.log( 'paymaster=', paymasterAddress)
 
+    //required: truffle allows too much gas for inner transaction. must estimate or set a lower gas limit
     Counter.defaults({...Counter.defaults(), gas:undefined })
+
     //NOTE: this is required only in truffle tests: the "artifacts.require" is called
     // before we could update the global web3's provider
     Counter.web3.setProvider(provider)

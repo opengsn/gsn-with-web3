@@ -1,4 +1,4 @@
-pragma solidity ^0.7.6;
+pragma solidity ^0.8.7;
 // SPDX-License-Identifier: MIT
 
 import "@opengsn/contracts/src/BaseRelayRecipient.sol";
@@ -9,8 +9,8 @@ contract Counter is BaseRelayRecipient {
 	uint public counter;
 	address public lastCaller;
 
-	constructor(address _forwarder) public {
-		trustedForwarder = _forwarder;
+	constructor(address _forwarder) {
+		_setTrustedForwarder(_forwarder);
 	}
 
 	function increment() public {
@@ -18,8 +18,8 @@ contract Counter is BaseRelayRecipient {
 		lastCaller = _msgSender();
 	}
 
-	function versionRecipient() external override view returns (string memory) {
-		return "2.2.0";
+	function versionRecipient() external override pure returns (string memory) {
+		return "2.2.5";
 	}
 
 } 

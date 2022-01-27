@@ -8,11 +8,9 @@
     "kovantest": "truffle test --network kovan"
   },
   "dependencies": {
-    "@opengsn/cli": "^2.2.2",
-    "@opengsn/contracts": "^2.2.2",
-    "@opengsn/provider": "^2.2.2",
-    "@truffle/hdwallet-provider": "^1.0.42",
-    "ganache-cli": "^6.11.0",
+    "@opengsn/cli": "^2.2.5",
+    "@opengsn/contracts": "^2.2.5",
+    "@opengsn/provider": "^2.2.5",
     "run-with-testrpc": "^0.3.1"
   },
   "devDependencies": {
